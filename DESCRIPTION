@@ -1,0 +1,23 @@
+Package: shooters
+Type: Package
+Title: Shiny Utility Functions
+Version: 0.0.0.9000
+Authors@R:
+    person("Martin", "Frigaard", , "mjfrigaard@pm.me", role = c("aut", "cre"))
+Description: Utilities for building, inspecting, and visualizing Shiny
+    applications and module structure. Provides tools for statically parsing
+    R source files to display module hierarchy and namespace relationships.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Imports:
+    bslib,
+    shiny
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    withr
+VignetteBuilder: knitr
+Config/testthat/edition: 3

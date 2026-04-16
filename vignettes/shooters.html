@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Getting started with shooters</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Getting started with shooters</h1>
+
+
+
+<p><code>shooters</code> provides <code>ns_tree()</code>, a
+static-analysis tool that reads R source files from a directory, builds
+a call graph of every function defined there, and prints a plain-text
+tree showing how those functions call one another. It is designed for
+Shiny apps — where understanding namespace structure matters — but it
+works on any collection of R source files.</p>
+<div id="how-ns_tree-works" class="section level2">
+<h2>How <code>ns_tree()</code> works</h2>
+<p><code>ns_tree()</code> performs four steps on every <code>.R</code>
+file it finds in the target directory:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Parse</strong> — <code>parse()</code> turns each file into
+an expression list.</li>
+<li><strong>Extract</strong> — <code>extract_func_def()</code>
+identifies top-level function assignments
+(<code>name &lt;- function(...) { ... }</code>).</li>
+<li><strong>Walk</strong> — <code>find_calls()</code> recursively walks
+each function body and records references to other <em>known</em>
+(i.e. locally defined) functions.</li>
+<li><strong>Render</strong> — <code>build_tree()</code> traverses the
+resulting call graph depth-first from a root node, and
+<code>render_tree()</code> formats the nested list as box-drawing ASCII
+art.</li>
+</ol>
+<p>The root node is resolved with a three-tier fallback:</p>
+<table>
+<colgroup>
+<col width="21%" />
+<col width="39%" />
+<col width="39%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tier</th>
+<th>Condition</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><code>app_fun</code> is defined</td>
+<td>Use it as the single tree root</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>ui_fun</code> or <code>server_fun</code> is defined</td>
+<td>Co-roots under a synthetic <code>(app)</code> node</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>None of the above</td>
+<td>All defined functions listed flat under <code>(app)</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="example-apps" class="section level2">
+<h2>Example apps</h2>
+<p><code>shooters</code> bundles four example apps in
+<code>inst/apps/</code> that cover the most common Shiny structural
+patterns. The path to each app directory can be retrieved with
+<code>system.file()</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>apps <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;apps&quot;</span>, <span class="at">package =</span> <span class="st">&quot;shooters&quot;</span>)</span></code></pre></div>
+<div id="minimal-bare-ui-server-no-functions" class="section level3">
+<h3>1. <code>minimal</code> — bare <code>ui</code> /
+<code>server</code>, no functions</h3>
+<p>The simplest possible Shiny app: <code>ui</code> is a plain R object
+(not a function), <code>server</code> is a function defined at the top
+level, and both are passed directly to <code>shinyApp()</code>. There is
+no launcher wrapper.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># inst/apps/minimal/app.R</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">&quot;Minimal App&quot;</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(<span class="fu">sliderInput</span>(<span class="st">&quot;n&quot;</span>, <span class="st">&quot;Number of points&quot;</span>, <span class="at">min =</span> <span class="dv">10</span>, <span class="at">max =</span> <span class="dv">200</span>, <span class="at">value =</span> <span class="dv">50</span>)),</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="fu">mainPanel</span>(<span class="fu">plotOutput</span>(<span class="st">&quot;plot&quot;</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  )</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  output<span class="sc">$</span>plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n), <span class="at">y =</span> <span class="fu">rnorm</span>(input<span class="sc">$</span>n))</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    <span class="fu">plot</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">&quot;steelblue&quot;</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  })</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>}</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+<p>Because there is no <code>launch()</code> function,
+<code>ns_tree()</code> falls through to <strong>Tier 2</strong>: it
+looks for <code>ui_fun</code> and <code>server_fun</code> by name.
+<code>ui</code> is not a function definition so
+<code>extract_func_def()</code> skips it; only <code>server</code> is
+captured. Pass the actual names used in the file via the
+<code>ui_fun</code> / <code>server_fun</code> arguments:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">ns_tree</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">file.path</span>(apps, <span class="st">&quot;minimal&quot;</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="at">ui_fun     =</span> <span class="st">&quot;ui&quot;</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="at">server_fun =</span> <span class="st">&quot;server&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; █─(app)</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; └─█─server</span></span></code></pre></div>
+<hr />
+</div>
+<div id="no_modules-helper-functions-no-shiny-modules" class="section level3">
+<h3>2. <code>no_modules</code> — helper functions, no Shiny modules</h3>
+<p>The app is split into a <code>launch()</code> entry point,
+<code>app_ui()</code>, <code>app_server()</code>, and two plain helper
+functions (<code>make_data()</code>, <code>render_scatter()</code>). No
+<code>NS()</code> or <code>moduleServer()</code> are used.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># inst/apps/no_modules/app.R  (selected functions)</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>app_server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">make_data</span>(input)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  output<span class="sc">$</span>scatter <span class="ot">&lt;-</span> <span class="fu">render_scatter</span>(plot_data)</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>}</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>make_data <span class="ot">&lt;-</span> <span class="cf">function</span>(input) { ... }</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>render_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>(data) { ... }</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>launch <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="fu">shinyApp</span>(<span class="at">ui =</span> <span class="fu">app_ui</span>(), <span class="at">server =</span> app_server)</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>}</span></code></pre></div>
+<p><code>launch()</code> is found immediately (<strong>Tier 1</strong>),
+so the tree is rooted there. The helper calls inside
+<code>app_server</code> appear as its children:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">ns_tree</span>(<span class="fu">file.path</span>(apps, <span class="st">&quot;no_modules&quot;</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; █─launch</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; ├─█─app_ui</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; └─█─app_server</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt;   ├─█─make_data</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt;   └─█─render_scatter</span></span></code></pre></div>
+<hr />
+</div>
+<div id="single_module-one-ns-moduleserver-pair" class="section level3">
+<h3>3. <code>single_module</code> — one NS / moduleServer pair</h3>
+<p>A scatter-plot module (<code>scatter_ui</code> /
+<code>scatter_server</code>) is defined in the same file and called from
+the app-level <code>app_ui()</code> / <code>app_server()</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># inst/apps/single_module/app.R  (selected functions)</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>scatter_ui <span class="ot">&lt;-</span> <span class="cf">function</span>(id) {</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  ns <span class="ot">&lt;-</span> <span class="fu">NS</span>(id)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="fu">tagList</span>(<span class="fu">sliderInput</span>(<span class="fu">ns</span>(<span class="st">&quot;n&quot;</span>), ...), <span class="fu">plotOutput</span>(<span class="fu">ns</span>(<span class="st">&quot;plot&quot;</span>)))</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>}</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>scatter_server <span class="ot">&lt;-</span> <span class="cf">function</span>(id) {</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="fu">moduleServer</span>(id, <span class="cf">function</span>(input, output, session) { ... })</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>}</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>app_ui <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  <span class="fu">fluidPage</span>(<span class="fu">titlePanel</span>(<span class="st">&quot;Single Module App&quot;</span>), <span class="fu">scatter_ui</span>(<span class="st">&quot;scatter1&quot;</span>))</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>}</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>app_server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>  <span class="fu">scatter_server</span>(<span class="st">&quot;scatter1&quot;</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>}</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>launch <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">shinyApp</span>(<span class="at">ui =</span> <span class="fu">app_ui</span>(), <span class="at">server =</span> app_server)</span></code></pre></div>
+<p>The tree shows the module pair nested one level below
+<code>app_ui</code> / <code>app_server</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">ns_tree</span>(<span class="fu">file.path</span>(apps, <span class="st">&quot;single_module&quot;</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; █─launch</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; ├─█─app_ui</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; │ └─█─scatter_ui</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; └─█─app_server</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;   └─█─scatter_server</span></span></code></pre></div>
+<hr />
+</div>
+<div id="nested_modules-modules-calling-other-modules" class="section level3">
+<h3>4. <code>nested_modules</code> — modules calling other modules</h3>
+<p>The most realistic pattern: a <code>display</code> parent module owns
+a slider and delegates rendering to two child modules
+(<code>plot</code>, <code>table</code>). Each module pair lives in its
+own file; <code>app.R</code> sources them all.</p>
+<pre><code>inst/apps/nested_modules/
+├── app.R          # launch(), sources everything
+├── app_ui.R       # app_ui()  → display_ui()
+├── app_server.R   # app_server() → display_server()
+├── mod_display.R  # display_ui(), display_server() → plot_*, table_*
+├── mod_plot.R     # plot_ui(), plot_server()
+└── mod_table.R    # table_ui(), table_server()</code></pre>
+<p><code>ns_tree()</code> reads <em>all</em> <code>.R</code> files in
+the directory so the full cross-file call graph is assembled before the
+tree is built:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">ns_tree</span>(<span class="fu">file.path</span>(apps, <span class="st">&quot;nested_modules&quot;</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; █─launch</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; ├─█─app_ui</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; │ └─█─display_ui</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; │   ├─█─plot_ui</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; │   └─█─table_ui</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; └─█─app_server</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;   └─█─display_server</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;     ├─█─plot_server</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt;     └─█─table_server</span></span></code></pre></div>
+<p>The tree faithfully mirrors the physical module hierarchy:
+<code>display</code> is the parent that bridges the app level to the
+<code>plot</code> and <code>table</code> leaf modules.</p>
+<hr />
+</div>
+</div>
+<div id="key-arguments" class="section level2">
+<h2>Key arguments</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">ns_tree</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="at">path       =</span> <span class="st">&quot;R&quot;</span>,          <span class="co"># directory to scan (default: &quot;R/&quot;)</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="at">app_fun    =</span> <span class="st">&quot;launch&quot;</span>,     <span class="co"># Tier-1 root function name</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="at">ui_fun     =</span> <span class="st">&quot;app_ui&quot;</span>,     <span class="co"># Tier-2 UI co-root name</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="at">server_fun =</span> <span class="st">&quot;app_server&quot;</span>  <span class="co"># Tier-2 server co-root name</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>)</span></code></pre></div>
+<p>Adjust <code>app_fun</code>, <code>ui_fun</code>, and
+<code>server_fun</code> to match whatever naming convention the target
+app uses.</p>
+<hr />
+</div>
+<div id="running-the-demo-apps" class="section level2">
+<h2>Running the demo apps</h2>
+<p><code>run_demo()</code> launches any of the four example apps
+interactively:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">run_demo</span>()                    <span class="co"># nested_modules (default)</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">run_demo</span>(<span class="st">&quot;single_module&quot;</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="fu">run_demo</span>(<span class="st">&quot;no_modules&quot;</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="fu">run_demo</span>(<span class="st">&quot;minimal&quot;</span>)</span></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
