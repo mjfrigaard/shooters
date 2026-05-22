@@ -10,6 +10,7 @@ app.
 ## Installation
 
 ``` r
+
 # install.packages("pak")
 pak::pak("mjfrigaard/shooters")
 ```
@@ -21,6 +22,7 @@ Point
 at any directory that contains R source files:
 
 ``` r
+
 ns_tree("R")
 ```
 
@@ -30,6 +32,7 @@ ns_tree("R")
 structural patterns.
 
 ``` r
+
 apps <- system.file("apps", package = "shooters")
 ```
 
@@ -41,6 +44,7 @@ the only defined function. Use `ui_fun` / `server_fun` to tell
 what to look for:
 
 ``` r
+
 ns_tree(file.path(apps, "minimal"), ui_fun = "ui", server_fun = "server")
 #> █─(app)
 #> └─█─server
@@ -52,6 +56,7 @@ A `launch()` entry point calls `app_ui()` and `app_server()`. The server
 delegates to two plain helper functions:
 
 ``` r
+
 ns_tree(file.path(apps, "no_modules"))
 #> █─launch
 #> ├─█─app_ui
@@ -66,6 +71,7 @@ A scatter-plot module (`scatter_ui` / `scatter_server`) is nested inside
 the app-level UI and server:
 
 ``` r
+
 ns_tree(file.path(apps, "single_module"))
 #> █─launch
 #> ├─█─app_ui
@@ -80,6 +86,7 @@ A `display` parent module delegates to `plot` and `table` child modules,
 spread across multiple files:
 
 ``` r
+
 ns_tree(file.path(apps, "nested_modules"))
 #> █─launch
 #> ├─█─app_ui
@@ -108,17 +115,18 @@ operates in four steps:
 
 The root is resolved with a three-tier fallback:
 
-| Tier | Condition                                 | Root used                           |
-|------|-------------------------------------------|-------------------------------------|
-| 1    | `app_fun` (default `"launch"`) is defined | That function                       |
-| 2    | `ui_fun` or `server_fun` is defined       | Co-roots under `(app)`              |
-| 3    | None of the above                         | All defined functions under `(app)` |
+| Tier | Condition | Root used |
+|----|----|----|
+| 1 | `app_fun` (default `"launch"`) is defined | That function |
+| 2 | `ui_fun` or `server_fun` is defined | Co-roots under `(app)` |
+| 3 | None of the above | All defined functions under `(app)` |
 
 ## Demo apps
 
 Run any of the bundled example apps interactively:
 
 ``` r
+
 run_demo()                    # nested_modules (default)
 run_demo("single_module")
 run_demo("no_modules")

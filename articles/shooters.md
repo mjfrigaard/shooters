@@ -31,11 +31,11 @@ performs four steps on every `.R` file it finds in the target directory:
 
 The root node is resolved with a three-tier fallback:
 
-| Tier | Condition                           | Behaviour                                       |
-|------|-------------------------------------|-------------------------------------------------|
-| 1    | `app_fun` is defined                | Use it as the single tree root                  |
-| 2    | `ui_fun` or `server_fun` is defined | Co-roots under a synthetic `(app)` node         |
-| 3    | None of the above                   | All defined functions listed flat under `(app)` |
+| Tier | Condition | Behaviour |
+|----|----|----|
+| 1 | `app_fun` is defined | Use it as the single tree root |
+| 2 | `ui_fun` or `server_fun` is defined | Co-roots under a synthetic `(app)` node |
+| 3 | None of the above | All defined functions listed flat under `(app)` |
 
 ------------------------------------------------------------------------
 
@@ -47,6 +47,7 @@ retrieved with
 [`system.file()`](https://rdrr.io/r/base/system.file.html).
 
 ``` r
+
 apps <- system.file("apps", package = "shooters")
 ```
 
@@ -57,6 +58,7 @@ function), `server` is a function defined at the top level, and both are
 passed directly to `shinyApp()`. There is no launcher wrapper.
 
 ``` r
+
 # inst/apps/minimal/app.R
 ui <- fluidPage(
   titlePanel("Minimal App"),
@@ -85,6 +87,7 @@ skips it; only `server` is captured. Pass the actual names used in the
 file via the `ui_fun` / `server_fun` arguments:
 
 ``` r
+
 ns_tree(
   file.path(apps, "minimal"),
   ui_fun     = "ui",
@@ -103,6 +106,7 @@ The app is split into a `launch()` entry point, `app_ui()`,
 `render_scatter()`). No `NS()` or `moduleServer()` are used.
 
 ``` r
+
 # inst/apps/no_modules/app.R  (selected functions)
 app_server <- function(input, output, session) {
   plot_data <- make_data(input)
@@ -121,6 +125,7 @@ launch <- function() {
 there. The helper calls inside `app_server` appear as its children:
 
 ``` r
+
 ns_tree(file.path(apps, "no_modules"))
 #> █─launch
 #> ├─█─app_ui
@@ -137,6 +142,7 @@ A scatter-plot module (`scatter_ui` / `scatter_server`) is defined in
 the same file and called from the app-level `app_ui()` / `app_server()`.
 
 ``` r
+
 # inst/apps/single_module/app.R  (selected functions)
 scatter_ui <- function(id) {
   ns <- NS(id)
@@ -162,6 +168,7 @@ The tree shows the module pair nested one level below `app_ui` /
 `app_server`:
 
 ``` r
+
 ns_tree(file.path(apps, "single_module"))
 #> █─launch
 #> ├─█─app_ui
@@ -191,6 +198,7 @@ reads *all* `.R` files in the directory so the full cross-file call
 graph is assembled before the tree is built:
 
 ``` r
+
 ns_tree(file.path(apps, "nested_modules"))
 #> █─launch
 #> ├─█─app_ui
@@ -212,6 +220,7 @@ modules.
 ## Key arguments
 
 ``` r
+
 ns_tree(
   path       = "R",          # directory to scan (default: "R/")
   app_fun    = "launch",     # Tier-1 root function name
@@ -231,6 +240,7 @@ convention the target app uses.
 launches any of the four example apps interactively:
 
 ``` r
+
 run_demo()                    # nested_modules (default)
 run_demo("single_module")
 run_demo("no_modules")

@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Shiny Utility Functions • shooters</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/Ubuntu-0.4.10/font.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/Ubuntu-0.4.10/font.css" rel="stylesheet">
 <link href="deps/Ubuntu_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="deps/Fira_Sans_Condensed-0.4.10/font.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -143,26 +143,26 @@
 </ol>
 <p>The root is resolved with a three-tier fallback:</p>
 <table class="table">
-<thead><tr class="header">
+<thead><tr>
 <th>Tier</th>
 <th>Condition</th>
 <th>Root used</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>1</td>
 <td>
 <code>app_fun</code> (default <code>"launch"</code>) is defined</td>
 <td>That function</td>
 </tr>
-<tr class="even">
+<tr>
 <td>2</td>
 <td>
 <code>ui_fun</code> or <code>server_fun</code> is defined</td>
 <td>Co-roots under <code>(app)</code>
 </td>
 </tr>
-<tr class="odd">
+<tr>
 <td>3</td>
 <td>None of the above</td>
 <td>All defined functions under <code>(app)</code>
